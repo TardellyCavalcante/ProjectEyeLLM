@@ -1,0 +1,50 @@
+Você receberá uma imagem em anexo.
+Sua tarefa é analisar essa imagem, identificar todos os objetos visíveis relevantes e gerar uma saída no formato **JSONL (uma lista de objetos JSON, um por linha)**.
+
+ Regras obrigatórias:
+
+1. Cada objeto identificado deve gerar uma entrada no JSONL.
+2. O campo "name" deve conter exatamente o nome do arquivo da imagem: {{name}}.
+3. O campo "task" deve conter o nome do objeto identificado (em inglês, no singular em uma palavra).
+4. O campo "condition" deve ser sempre "present".
+5. O campo "subject" deve sempre {{subject}}.
+6. O campo "bbox" deve conter as coordenadas do objeto em pixels no seguinte formato:
+
+
+[bbox_x, bbox_y, width, height]
+
+
+Onde:
+
+* bbox_x = coordenada X do canto superior esquerdo
+* bbox_y = coordenada Y do canto superior esquerdo
+* width = largura do objeto em pixels
+* height = altura do objeto em pixels
+
+ Procedimento:
+
+1. Carregue a imagem enviada.
+2. Identifique todos os objetos claramente distinguíveis.
+3. Para cada objeto:
+
+   * Determine o retângulo mínimo que o contém.
+   * Extraia as coordenadas em pixels.
+   * A coordenada (0,0) x, y está localizada no canto superior esquerdo.
+   * Considere a imagem inteira inclusive bordas.
+4. Gere a saída em formato JSONL, uma linha por objeto, sem texto adicional.
+
+ Exemplo de formato esperado:
+
+
+{"name":"000000478726.jpg","subject":2,"task":"bottle","condition":"present","bbox":[1063,68,95,334]}
+{"name":"000000478726.jpg","subject":2,"task":"table","condition":"present","bbox":[120,300,800,450]}
+
+
+ Restrições:
+
+* Não inclua explicações.
+* Não realize redimencionamento.
+* Não inclua comentários.
+* Não inclua formatação extra.
+* Não use listas ou blocos de código.
+* A saída deve ser exclusivamente o JSONL final.
